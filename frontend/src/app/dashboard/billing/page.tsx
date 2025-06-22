@@ -4,6 +4,12 @@ import type { VariantProps } from "class-variance-authority";
 import { ArrowLeftIcon, CheckIcon } from "lucide-react";
 import Link from "next/link";
 import { createCheckoutSession, type PriceId } from "~/actions/stripe";
+import {
+  Accordion,
+  AccordionContent,
+  AccordionItem,
+  AccordionTrigger,
+} from "~/components/ui/accordion";
 import { Button, buttonVariants } from "~/components/ui/button";
 import {
   Card,
@@ -141,15 +147,34 @@ export default function BillingPage() {
 
       <div className="bg-muted/50 rounded-lg p-6">
         <h3 className="mb-4 text-lg font-semibold">How credits work</h3>
-        <ul className="text-muted-foreground list-disc space-y-2 pl-5 text-sm">
-          <li>1 credit = 1 minute of podcast processing</li>
-          <li>
-            The program will create around 1 clip per 5 minutes of podcast
-          </li>
-          <li>Credits never expire and can be used anytime</li>
-          <li>Longer podcasts require more credits based on duration</li>
-          <li>All packages are one-time purchases (not subscription)</li>
-        </ul>
+        <Accordion type="single" collapsible>
+          <AccordionItem value="item-1">
+            <AccordionTrigger>How are credits calculated?</AccordionTrigger>
+            <AccordionContent>
+              1 credit = 1 minute of podcast processing.
+            </AccordionContent>
+          </AccordionItem>
+          <AccordionItem value="item-2">
+            <AccordionTrigger>
+              How much content do I need to create clips?
+            </AccordionTrigger>
+            <AccordionContent>
+              The program will create around 1 clip per 5 minutes of podcast.
+            </AccordionContent>
+          </AccordionItem>
+          <AccordionItem value="item-3">
+            <AccordionTrigger>When does my credits expire?</AccordionTrigger>
+            <AccordionContent>
+              Credits never expire and can be used anytime.
+            </AccordionContent>
+          </AccordionItem>
+          <AccordionItem value="item-4">
+            <AccordionTrigger>Do I pay monthly for credits?</AccordionTrigger>
+            <AccordionContent>
+              All packages are one-time purchases, not subscription.
+            </AccordionContent>
+          </AccordionItem>
+        </Accordion>
       </div>
     </div>
   );

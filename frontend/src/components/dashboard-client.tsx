@@ -2,7 +2,6 @@
 
 import Dropzone, { type DropzoneState } from "shadcn-dropzone";
 import type { Clip } from "@prisma/client";
-import Link from "next/link";
 import { Button } from "./ui/button";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "./ui/tabs";
 import {
@@ -29,6 +28,7 @@ import { Badge } from "./ui/badge";
 import { useRouter } from "next/navigation";
 import { ClipDisplay } from "./clip-display";
 import { formatDate } from "~/lib/utils";
+import { RefreshCcw } from "lucide-react";
 
 export function DashboardClient({
   uploadedFiles,
@@ -108,15 +108,12 @@ export function DashboardClient({
       <div className="flex items-center justify-between">
         <div>
           <h1 className="text-2xl font-semibold tracking-tight">
-            Podcast Clipper
+            👋 Welcome to Clipper,
           </h1>
           <p className="text-muted-foreground">
-            Upload your podcast and get AI-generated clips instantly
+            Transform your long-form videos into viral clips that drive engagement. Upload podcasts, interviews, live streams, or any video content and let AI automatically extract the most compelling moments for social media success.
           </p>
         </div>
-        <Link href="/dashboard/billing">
-          <Button>Buy Credits</Button>
-        </Link>
       </div>
 
       <Tabs defaultValue="upload">
@@ -128,10 +125,7 @@ export function DashboardClient({
         <TabsContent value="upload">
           <Card>
             <CardHeader>
-              <CardTitle>Upload Podcast</CardTitle>
-              <CardDescription>
-                Upload your audio or video file to generate clips
-              </CardDescription>
+              <CardTitle className="underline">Upload Video</CardTitle>
             </CardHeader>
             <CardContent>
               <Dropzone
@@ -147,7 +141,7 @@ export function DashboardClient({
                       <UploadCloud className="text-muted-foreground h-12 w-12" />
                       <p className="font-medium">Drag and drop your file</p>
                       <p className="text-muted-foreground text-sm">
-                        or click to browse (MP4 up to 500MB)
+                        or click to browse video files
                       </p>
                       <Button
                         className="cursor-pointer"
@@ -193,7 +187,7 @@ export function DashboardClient({
               {uploadedFiles.length > 0 && (
                 <div className="pt-6">
                   <div className="mb-2 flex items-center justify-between">
-                    <h3 className="text-md mb-2 font-medium">Queue status</h3>
+                    <h3 className="text-md mb-2 font-medium underline">Queue status</h3>
                     <Button
                       variant="outline"
                       size="sm"
@@ -203,7 +197,7 @@ export function DashboardClient({
                       {refreshing && (
                         <Loader2 className="mr-2 h-4 w-4 animate-spin" />
                       )}
-                      Refresh
+                      <RefreshCcw className="w-10 h-10" />
                     </Button>
                   </div>
                   <div className="max-h-[300px] overflow-auto rounded-md border">
@@ -227,13 +221,13 @@ export function DashboardClient({
                             </TableCell>
                             <TableCell>
                               {item.status === "queued" && (
-                                <Badge variant="outline">Queued</Badge>
+                                <Badge variant="secondary">Queued</Badge>
                               )}
                               {item.status === "processing" && (
                                 <Badge variant="outline">Processing</Badge>
                               )}
                               {item.status === "processed" && (
-                                <Badge variant="outline">Processed</Badge>
+                                <Badge variant="default">Processed</Badge>
                               )}
                               {item.status === "no credits" && (
                                 <Badge variant="destructive">No credits</Badge>

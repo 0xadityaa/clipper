@@ -1,24 +1,25 @@
 import "~/styles/globals.css";
 
 import { type Metadata } from "next";
-import { Geist } from "next/font/google";
+import localFont from 'next/font/local';
 
 export const metadata: Metadata = {
-  title: "Podcast Clipper",
-  description: "Podcast Clipper",
+  title: "Clipper",
+  description: "Generate viral and engaging clips from your videos",
   icons: [{ rel: "icon", url: "/favicon.ico" }],
 };
 
-const geist = Geist({
-  subsets: ["latin"],
-  variable: "--font-geist-sans",
+const martianMono = localFont({
+  src: './Martian_Mono.ttf',
+  variable: '--font-martian-mono',
+  display: 'swap',
 });
 
 export default function RootLayout({
   children,
 }: Readonly<{ children: React.ReactNode }>) {
   return (
-    <html lang="en" className={`${geist.variable}`}>
+    <html lang="en" className={`dark ${martianMono.variable}`}>
       <body>{children}</body>
     </html>
   );

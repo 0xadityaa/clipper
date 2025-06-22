@@ -13,18 +13,15 @@ import {
 } from "./ui/dropdown-menu";
 import { Avatar, AvatarFallback } from "./ui/avatar";
 import { signOut } from "next-auth/react";
-import { useEffect } from "react";
-import { toast } from "sonner";
+import { Coins } from "lucide-react";
 
 const NavHeader = ({ credits, email }: { credits: number; email: string }) => {
   return (
     <header className="bg-background sticky top-0 z-10 flex justify-center border-b">
       <div className="container flex h-16 items-center justify-between px-4 py-2">
         <Link href="/dashboard" className="flex items-center">
-          <div className="font-sans text-xl font-medium tracking-tight">
-            <span className="text-foreground">podcast</span>
-            <span className="font-light text-gray-500">/</span>
-            <span className="text-foreground font-light">clipper</span>
+          <div className="text-xl font-medium tracking-tight">
+            <span className="text-foreground underline">clipper</span>
           </div>
         </Link>
 
@@ -34,16 +31,9 @@ const NavHeader = ({ credits, email }: { credits: number; email: string }) => {
               variant="secondary"
               className="h-8 px-3 py-1.5 text-xs font-medium"
             >
-              {credits} credits
+              <Coins className="w-10 h-10" />
+              {credits}
             </Badge>
-            <Button
-              variant="outline"
-              size="sm"
-              asChild
-              className="h-8 text-xs font-medium"
-            >
-              <Link href="/dashboard/billing">Buy more</Link>
-            </Button>
           </div>
 
           <DropdownMenu>
@@ -53,7 +43,11 @@ const NavHeader = ({ credits, email }: { credits: number; email: string }) => {
                 className="relative h-8 w-8 rounded-full p-0"
               >
                 <Avatar>
-                  <AvatarFallback>{email.charAt(0)}</AvatarFallback>
+                  <img 
+                    src="https://deifkwefumgah.cloudfront.net/shadcnblocks/block/avatar-2.webp"
+                    alt="User avatar"
+                    className="h-8 w-8 rounded-full object-cover"
+                  />
                 </Avatar>
               </Button>
             </DropdownMenuTrigger>
