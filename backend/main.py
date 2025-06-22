@@ -98,7 +98,7 @@ def create_vertical_video(tracks, scores, pyframes_path, pyavi_path, audio_path,
             scale = target_width / img.shape[1]
             resized_height = int(img.shape[0] * scale)
             resized_image = cv2.resize(
-                img, (target_width, resized_height), interpolation=cv2.INTER_AREA)
+                img, (target_width, resized_height), interpolation=cv2.INTER_LANCZOS4)
 
             scale_for_bg = max(
                 target_width / img.shape[1], target_height / img.shape[0])
@@ -106,7 +106,7 @@ def create_vertical_video(tracks, scores, pyframes_path, pyavi_path, audio_path,
             bg_width = int(img.shape[1] * scale_for_bg)
             bg_height = int(img.shape[0] * scale_for_bg)
 
-            blurred_background = cv2.resize(img, (bg_width, bg_height))
+            blurred_background = cv2.resize(img, (bg_width, bg_height), interpolation=cv2.INTER_LANCZOS4)
             blurred_background = cv2.GaussianBlur(
                 blurred_background, (121, 121), 0)
 
@@ -124,7 +124,7 @@ def create_vertical_video(tracks, scores, pyframes_path, pyavi_path, audio_path,
         elif mode == "crop":
             scale = target_height / img.shape[0]
             resized_image = cv2.resize(
-                img, None, fx=scale, fy=scale, interpolation=cv2.INTER_AREA)
+                img, None, fx=scale, fy=scale, interpolation=cv2.INTER_LANCZOS4)
             frame_width = resized_image.shape[1]
 
             center_x = int(
@@ -140,9 +140,12 @@ def create_vertical_video(tracks, scores, pyframes_path, pyavi_path, audio_path,
     if vout:
         vout.release()
 
+    # Optimized FFMPEG command for high quality output
     ffmpeg_command = (f"ffmpeg -i {temp_video_path} -i {audio_path} "
-                      f"-c:v h264 -preset fast -crf 23 -c:a aac -b:a 128k "
-                      f"{output_path}")
+                      f"-c:v libx264 -preset slower -crf 18 -profile:v high "
+                      f"-level:v 4.0 -pix_fmt yuv420p -movflags +faststart "
+                      f"-c:a aac -b:a 192k -ar 48000 "
+                      f"-y {output_path}")
     subprocess.run(ffmpeg_command, shell=True, check=True, text=True)
 
 
@@ -222,8 +225,11 @@ def create_subtitles_with_ffmpeg(transcript_segments: list, clip_starts: float, 
 
     subs.save(subtitle_path)
 
+    # Optimized FFMPEG command for high quality subtitle overlay
     ffmpeg_cmd = (f"ffmpeg -i {clip_video_path} -vf \"ass={subtitle_path}\" "
-                  f"-c:v h264 -preset fast -crf 23 {output_path}")
+                  f"-c:v libx264 -preset slower -crf 18 -profile:v high "
+                  f"-level:v 4.0 -pix_fmt yuv420p -movflags +faststart "
+                  f"-c:a copy -y {output_path}")
 
     subprocess.run(ffmpeg_cmd, shell=True, check=True)
 
@@ -251,13 +257,15 @@ def process_clip(base_dir: str, original_video_path: str, s3_key: str, start_tim
     pyavi_path.mkdir(exist_ok=True)
 
     duration = end_time - start_time
+    # Optimized FFMPEG command for high quality video cutting
     cut_command = (f"ffmpeg -i {original_video_path} -ss {start_time} -t {duration} "
-                   f"{clip_segment_path}")
+                   f"-c:v libx264 -preset medium -crf 20 -c:a aac -b:a 192k "
+                   f"-avoid_negative_ts make_zero -y {clip_segment_path}")
     subprocess.run(cut_command, shell=True, check=True,
                    capture_output=True, text=True)
 
-    # Extract audio
-    extract_cmd = f"ffmpeg -i {clip_segment_path} -vn -acodec pcm_s16le -ar 16000 -ac 1 {audio_path}"
+    # Extract audio with higher quality settings
+    extract_cmd = f"ffmpeg -i {clip_segment_path} -vn -acodec pcm_s16le -ar 48000 -ac 1 -y {audio_path}"
     subprocess.run(extract_cmd, shell=True, check=True,
                    capture_output=True)
 
@@ -414,7 +422,7 @@ class Clipper:
 
         # 3. Process clips
         # TODO: increase clip_moments to whatever the user wants, for now, hardcoded to 1 for quick testing
-        for index, moment in enumerate(clip_moments[:1]):
+        for index, moment in enumerate(clip_moments[:3]):
             if "start" in moment and "end" in moment:
                 print("Processing clip " + str(index) + " from " +
                       str(moment["start"]) + " to " + str(moment["end"]))
