@@ -37,7 +37,7 @@ The application is built with a modern, scalable architecture that separates the
 ![image](https://github.com/user-attachments/assets/7cbb228a-bd8b-46f9-9e46-af79f0e14184)
 
 **Serverless GPU Backend with Modal:**
-![image](https://github.com/user-attachments/assets/23a2ff81-671e-4a82-8061-36ef3bde316f)
+![image](https://github.com/user-attachments/assets/f250c6fe-1755-472b-8c92-b91b11f36c13)
 
 **Stripe Purchase Flow:**
 ![image](https://github.com/user-attachments/assets/ba06cfb8-c0bd-4fb9-a03d-1098f4224c59)
