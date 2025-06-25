@@ -24,22 +24,16 @@
     "plugins": [{ "name": "next" }],
     "incremental": true,
 
-    /* Path Aliases */
-    "baseUrl": "./src",
+    /* Path Aliases - Simplified */
+    "baseUrl": ".",
     "paths": {
-      "~/*": ["./*"],
-      "~/lib/*": ["./lib/*"],
-      "~/components/*": ["./components/*"],
-      "~/app/*": ["./app/*"]
+      "~/*": ["./src/*"]
     }
   },
   "include": [
-    "next-env.d.ts",
+    ".next/types/**/*.ts",
     "**/*.ts",
-    "**/*.tsx",
-    "**/*.cjs",
-    "**/*.js",
-    ".next/types/**/*.ts"
+    "**/*.tsx"
   ],
   "exclude": ["node_modules"]
 }

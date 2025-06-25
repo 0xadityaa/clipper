@@ -5,6 +5,14 @@
 import "./src/env.js";
 
 /** @type {import("next").NextConfig} */
-const config = {};
+const config = {
+  webpack: (config) => {
+    config.resolve.alias = {
+      ...config.resolve.alias,
+      "~": new URL("./src", import.meta.url).pathname,
+    };
+    return config;
+  },
+};
 
 export default config;

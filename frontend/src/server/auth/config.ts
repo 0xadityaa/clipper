@@ -1,7 +1,14 @@
 import { PrismaAdapter } from "@auth/prisma-adapter";
 import { type DefaultSession, type NextAuthConfig } from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
-import { comparePasswords } from "~/lib/auth";
+import { compare } from "bcryptjs";
+
+async function comparePasswords(
+  plainPassword: string,
+  hashedPassword: string,
+) {
+  return compare(plainPassword, hashedPassword);
+}
 
 import { db } from "~/server/db";
 

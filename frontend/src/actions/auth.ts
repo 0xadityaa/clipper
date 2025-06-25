@@ -1,6 +1,10 @@
 "use server";
 
-import { hashPassword } from "~/lib/auth";
+import { hash } from "bcryptjs";
+
+async function hashPassword(password: string) {
+  return hash(password, 12);
+}
 import { signupSchema, type SignupFormValues } from "~/schemas/auth";
 import { db } from "~/server/db";
 import Stripe from "stripe";
