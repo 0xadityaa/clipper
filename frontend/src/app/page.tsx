@@ -1,7 +1,6 @@
 import Link from "next/link";
 import { Button } from "~/components/ui/button";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "~/components/ui/card";
-import { Badge } from "~/components/ui/badge";
+import { Card, CardDescription, CardHeader, CardTitle } from "~/components/ui/card";
 import { BGPattern } from "~/components/ui/bg-pattern";
 import { Play, Scissors, Zap, Clock, Users, Star } from "lucide-react";
 

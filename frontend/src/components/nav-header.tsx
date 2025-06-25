@@ -11,7 +11,7 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "./ui/dropdown-menu";
-import { Avatar, AvatarFallback } from "./ui/avatar";
+import { Avatar } from "./ui/avatar";
 import { signOut } from "next-auth/react";
 import { Coins } from "lucide-react";
 
@@ -43,6 +43,7 @@ const NavHeader = ({ credits, email }: { credits: number; email: string }) => {
                 className="relative h-8 w-8 rounded-full p-0"
               >
                 <Avatar>
+                  {/* eslint-disable-next-line @next/next/no-img-element */}
                   <img 
                     src="https://deifkwefumgah.cloudfront.net/shadcnblocks/block/avatar-2.webp"
                     alt="User avatar"

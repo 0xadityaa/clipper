@@ -73,7 +73,7 @@ export async function getClipPlayUrl(
     });
 
     return { succes: true, url: signedUrl };
-  } catch (error) {
+  } catch {
     return { succes: false, error: "Failed to generate play URL." };
   }
 }
@@ -150,8 +150,8 @@ export async function deleteClip(
 
     revalidatePath("/dashboard");
     return { success: true };
-  } catch (error) {
-    console.error("Error deleting clip:", error);
+  } catch (deleteError) {
+    console.error("Error deleting clip:", deleteError);
     return { success: false, error: "Failed to delete clip." };
   }
 }

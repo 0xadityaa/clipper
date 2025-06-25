@@ -10,7 +10,7 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from "~/components/ui/accordion";
-import { Button, buttonVariants } from "~/components/ui/button";
+import { Button, type buttonVariants } from "~/components/ui/button";
 import {
   Card,
   CardContent,

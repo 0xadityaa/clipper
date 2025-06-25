@@ -29,7 +29,7 @@ function ClipCard({ clip }: { clip: Clip }) {
         } else if (result.error) {
           console.error("Failed to get play url: " + result.error);
         }
-      } catch (error) {
+      } catch {
       } finally {
         setIsLoadingUrl(false);
       }
@@ -56,20 +56,22 @@ function ClipCard({ clip }: { clip: Clip }) {
       description: "This action cannot be undone. The clip will be permanently removed from your account and storage.",
       action: {
         label: "Delete",
-        onClick: async () => {
-          setIsDeleting(true);
-          try {
-            const result = await deleteClip(clip.id);
-            if (result.success) {
-              toast.success("Clip deleted successfully!");
-            } else {
-              toast.error(result.error || "Failed to delete clip");
+        onClick: () => {
+          void (async () => {
+            setIsDeleting(true);
+            try {
+              const result = await deleteClip(clip.id);
+              if (result.success) {
+                toast.success("Clip deleted successfully!");
+              } else {
+                toast.error(result.error ?? "Failed to delete clip");
+              }
+            } catch {
+              toast.error("An error occurred while deleting the clip");
+            } finally {
+              setIsDeleting(false);
             }
-          } catch (error) {
-            toast.error("An error occurred while deleting the clip");
-          } finally {
-            setIsDeleting(false);
-          }
+          })();
         },
       },
       cancel: {

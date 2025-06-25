@@ -43,11 +43,11 @@ export async function POST(req: Request) {
         { expand: ["line_items"] },
       );
 
-      console.log("Retrieved session line items:", retrievedSession.line_items?.data.length || 0);
+      console.log("Retrieved session line items:", retrievedSession.line_items?.data.length ?? 0);
 
       const lineItems = retrievedSession.line_items;
       if (lineItems && lineItems.data.length > 0) {
-        const priceId = lineItems.data[0]?.price?.id ?? undefined;
+        const priceId = lineItems.data[0]?.price?.id;
 
         console.log("Price ID from line item:", priceId);
         console.log("Expected price IDs:", {
