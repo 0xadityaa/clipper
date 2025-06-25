@@ -27,7 +27,7 @@ import {
 import { Badge } from "./ui/badge";
 import { useRouter } from "next/navigation";
 import { ClipDisplay } from "./clip-display";
-import { formatDate } from "~/lib/utils";
+import { formatDate } from "../lib/utils";
 import { RefreshCcw } from "lucide-react";
 
 export function DashboardClient({
