@@ -27,7 +27,13 @@ import {
 import { Badge } from "./ui/badge";
 import { useRouter } from "next/navigation";
 import { ClipDisplay } from "./clip-display";
-import { formatDate } from "../lib/utils";
+function formatDate(date: Date | string): string {
+  const dateObj = typeof date === 'string' ? new Date(date) : date;
+  const year = dateObj.getFullYear();
+  const month = dateObj.getMonth() + 1;
+  const day = dateObj.getDate();
+  return `${month}/${day}/${year}`;
+}
 import { RefreshCcw } from "lucide-react";
 
 export function DashboardClient({

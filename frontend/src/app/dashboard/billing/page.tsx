@@ -19,7 +19,12 @@ import {
   CardHeader,
   CardTitle,
 } from "~/components/ui/card";
-import { cn } from "../../../lib/utils";
+import { clsx, type ClassValue } from "clsx";
+import { twMerge } from "tailwind-merge";
+
+function cn(...inputs: ClassValue[]) {
+  return twMerge(clsx(inputs));
+}
 
 interface PricingPlan {
   title: string;
